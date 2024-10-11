@@ -1,57 +1,190 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import Card from "./Card";
 
 const Newsapp = () => {
+  const [open, setOpen] = useState(false);
+  const [searchName, setsearchName] = useState("India");
+  const [newsData, setNewsData] = useState([]);
+  const [error, setError] = useState(null);
+  const API_KEY = "a95cd1f5484f4351b4d74e91d6eecb35";
+
+  const getData = async () => {
+    try {
+      setError(null); // Reset error before fetching new data
+      const response = await fetch(
+        `https://newsapi.org/v2/everything?q=${searchName}&apiKey=${API_KEY}`
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const jsonData = await response.json();
+      if (jsonData.articles.length === 0) {
+        throw new Error("No articles found");
+      }
+
+      setNewsData(jsonData.articles);
+    } catch (error) {
+      setError(error.message);
+      setNewsData([]);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, [searchName]);
+
+  const handleInput = (e) => {
+    setsearchName(e.target.value);
+  };
+
+  const switchInput = (e) => {
+    setsearchName(e.target.value);
+  };
   return (
     <>
-    
-    <nav className="bg-gray-700 shadow-md">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <a href="#" className="text-3xl font-bold text-white">
-              NewsHub.
-            </a>
-          </div>
+      <nav className="bg-gray-700 shadow-md">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo */}
+            <div className="flex-shrink-0">
+              <a href="#" className="text-3xl font-bold text-white">
+                NewsHub.
+              </a>
+            </div>
 
-          {/* Links (Desktop Only) */}
-          <div className="flex space-x-8">
-            <a href="#" className="text-white hover:text-red-600 px-3 py-2 rounded-md text-xl font-medium">
-              Home
-            </a>
-            <a href="#" className="text-white hover:text-red-600  px-3 py-2 rounded-md text-xl font-medium">
-              World
-            </a>
-            <a href="#" className="text-white hover:text-red-600  px-3 py-2 rounded-md text-xl font-medium">
-              Politics
-            </a>
-            <a href="#" className="text-white hover:text-red-600 px-3 py-2 rounded-md text-xl font-medium">
-              Technology
-            </a>
-            <a href="#" className="text-white hover:text-red-600  px-3 py-2 rounded-md text-xl font-medium">
-              Sports
-            </a>
-          </div>
+            <div className="md:hidden flex items-center">
+              <button
+                className="text-white focus:outline-none"
+                onClick={() => setOpen(!open)}
+              >
+                <svg
+                  className="h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16m-7 6h7"
+                  />
+                </svg>
+              </button>
+            </div>
 
-          {/* Search Bar */}
-          <div className="flex items-center relative">
-            <input
-              type="text"
-              className="border border-gray-300 rounded-3xl pl-8 pr-4 py-2 text-sm"
-              placeholder="Search news..."
-            />
-            <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M12.9 14.32a7.53 7.53 0 111.42 1.42l5.58 5.58a1 1 0 01-1.42 1.42l-5.58-5.58a7.53 7.53 0 01-7.9-7.9zM10 14a4 4 0 100-8 4 4 0 000 8z" clipRule="evenodd" />
-              </svg>
-            </span>
+            {/* Links (Desktop) */}
+            <div className="hidden md:flex space-x-8">
+              <button
+                className="text-white hover:text-red-600  px-3 py-2 rounded-md text-xl font-medium"
+                onClick={switchInput}
+                value="world"
+              >
+                World
+              </button>
+
+              <button
+                className="text-white hover:text-red-600  px-3 py-2 rounded-md text-xl font-medium"
+                onClick={switchInput}
+                value="politics"
+              >
+                Politics
+              </button>
+
+              <button
+                className="text-white hover:text-red-600  px-3 py-2 rounded-md text-xl font-medium"
+                onClick={switchInput}
+                value="technology"
+              >
+                Technology
+              </button>
+
+              <button
+                className="text-white hover:text-red-600  px-3 py-2 rounded-md text-xl font-medium"
+                onClick={switchInput}
+                value="sports"
+              >
+                Sports
+              </button>
+            </div>
+
+            {/* Search Bar */}
+            <div className="hidden md:flex items-center relative">
+              <div className="flex border border-gray-300 rounded-3xl overflow-hidden">
+                <input
+                  value={searchName}
+                  onChange={handleInput}
+                  type="text"
+                  className="pl-4 pr-4 py-2 text-sm w-64 focus:outline-none"
+                  placeholder="Search news..."
+                />
+                <button
+                  className="bg-purple-500 text-white px-4 py-2  hover:bg-purple-900 focus:outline-none"
+                  onClick={() => getData()}
+                >
+                  Search
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
-  
-    </>
-  )
-}
 
-export default Newsapp
+        {/* Mobile Menu  */}
+        <div className={`${open ? "block" : "hidden"} md:hidden`}>
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <button
+              className="text-white hover:text-red-600  px-3 py-2 rounded-md text-xl font-medium"
+              onClick={switchInput}
+              value="world"
+            >
+              World
+            </button>
+
+            <button
+              className="text-white hover:text-red-600  px-3 py-2 rounded-md text-xl font-medium"
+              onClick={switchInput}
+              value="politics"
+            >
+              Politics
+            </button>
+
+            <button
+              className="text-white hover:text-red-600  px-3 py-2 rounded-md text-xl font-medium"
+              onClick={switchInput}
+              value="technology"
+            >
+              Technology
+            </button>
+
+            <button
+              className="text-white hover:text-red-600  px-3 py-2 rounded-md text-xl font-medium"
+              onClick={switchInput}
+              value="sports"
+            >
+              Sports
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <div className="container mx-auto px-4 mt-6">
+        {error ? (
+          <div className="text-center text-red-500 font-bold text-lg">
+            {error} {/* Show error message */}
+          </div>
+        ) : (
+          <Card data={newsData} />
+        )}
+      </div>
+
+      <div>
+        <Card data={newsData} />
+      </div>
+    </>
+  );
+};
+
+export default Newsapp;
