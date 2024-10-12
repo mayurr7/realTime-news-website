@@ -42,7 +42,6 @@ Run the following command to install all the project dependencies:
 
  ```bash
 *npm install*
-    ```
 This will install all the packages listed in the package.json file.
 
 5. **Create a .env File**
@@ -70,7 +69,7 @@ This ensures the .env file remains private.
 
 Once the dependencies are installed and the .env file is set up, start the development server with the following command:
 
- ```bash
+
 *npm start*
-```
+
 This will launch the application at http://localhost:3000/. Open this URL in your browser to view the app.
