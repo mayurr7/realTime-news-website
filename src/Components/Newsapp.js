@@ -3,7 +3,7 @@ import Card from "./Card";
 
 const Newsapp = () => {
   const [open, setOpen] = useState(false);
-  const [searchName, setsearchName] = useState("India");
+  const [searchName, setsearchName] = useState("breaking news");
   const [newsData, setNewsData] = useState([]);
   const [error, setError] = useState(null);
   const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
@@ -79,6 +79,13 @@ const Newsapp = () => {
 
             {/* Links (Desktop) */}
             <div className="hidden md:flex space-x-8">
+            <button
+                className="text-white hover:text-red-600  px-3 py-2 rounded-md text-xl font-medium"
+                onClick={switchInput}
+                value="breaking news"
+              >
+                Home
+              </button>
               <button
                 className="text-white hover:text-red-600  px-3 py-2 rounded-md text-xl font-medium"
                 onClick={switchInput}
