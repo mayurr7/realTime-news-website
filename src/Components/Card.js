@@ -1,6 +1,6 @@
 import React from "react";
 
-const Card = ({ data }) => {
+const Card = ({ data }) => {  
   return (
     <>
       <div className="container mx-auto p-4">
@@ -22,6 +22,9 @@ const Card = ({ data }) => {
                   <div className="p-4">
                     <div className="font-bold text-xl mb-2">
                       {currItem.title}
+                    </div>
+                    <div className="font-bold text-lg mb-2">
+                      {currItem.publishedAt}
                     </div>
                     <p className="text-gray-700 text-base">
                       {currItem.description}

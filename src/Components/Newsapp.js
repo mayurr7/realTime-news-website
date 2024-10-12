@@ -6,7 +6,7 @@ const Newsapp = () => {
   const [searchName, setsearchName] = useState("India");
   const [newsData, setNewsData] = useState([]);
   const [error, setError] = useState(null);
-  const API_KEY = "a95cd1f5484f4351b4d74e91d6eecb35";
+  const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
 
   const getData = async () => {
     try {
@@ -30,6 +30,7 @@ const Newsapp = () => {
       setNewsData([]);
     }
   };
+
 
   useEffect(() => {
     getData();
@@ -135,6 +136,13 @@ const Newsapp = () => {
         {/* Mobile Menu  */}
         <div className={`${open ? "block" : "hidden"} md:hidden`}>
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <button
+              className="text-white hover:text-red-600  px-3 py-2 rounded-md text-xl font-medium"
+              onClick={switchInput}
+              value="home"
+            >
+              Home
+            </button>
             <button
               className="text-white hover:text-red-600  px-3 py-2 rounded-md text-xl font-medium"
               onClick={switchInput}
