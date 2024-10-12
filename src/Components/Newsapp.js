@@ -3,7 +3,7 @@ import Card from "./Card";
 
 const Newsapp = () => {
   const [open, setOpen] = useState(false);
-  const [searchName, setsearchName] = useState("breaking news");
+  const [searchName, setsearchName] = useState("India");
   const [newsData, setNewsData] = useState([]);
   const [error, setError] = useState(null);
   const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
