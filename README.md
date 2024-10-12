@@ -40,17 +40,19 @@ Follow these steps to set up the project locally:
 
 Run the following command to install all the project dependencies:
 
- ```bash
-*npm install*
+bash
+Copy code
+npm install
 This will install all the packages listed in the package.json file.
 
 5. **Create a .env File**
 
 In the root directory of your project, create a .env file. This file will be used to store your API key securely:
 
-
-*REACT_APP_NEWS_API_KEY=your-api-key-here*
-*Replace your-api-key-here with the actual API key you receive from the news API provider (e.g., NewsAPI).*
+bash
+Copy code
+REACT_APP_NEWS_API_KEY=your-api-key-here
+Replace your-api-key-here with the actual API key you receive from the news API provider (e.g., NewsAPI).
 
 6. **Add .env to .gitignore**
 
@@ -69,7 +71,7 @@ This ensures the .env file remains private.
 
 Once the dependencies are installed and the .env file is set up, start the development server with the following command:
 
-
-*npm start*
-
+bash
+Copy code
+npm start
 This will launch the application at http://localhost:3000/. Open this URL in your browser to view the app.
